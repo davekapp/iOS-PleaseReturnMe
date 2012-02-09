@@ -12,3 +12,8 @@
   #import <UIKit/UIKit.h>
   #import <Foundation/Foundation.h>
 #endif
+
+#define kName @"name"
+#define kEmail @"email"
+#define kPhone @"phone"
+#define kPicture @"picture"

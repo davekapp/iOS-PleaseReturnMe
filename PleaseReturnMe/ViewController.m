@@ -9,6 +9,10 @@
 #import "ViewController.h"
 
 @implementation ViewController
+@synthesize nameLabel;
+@synthesize emailLabel;
+@synthesize phoneLabel;
+@synthesize picture;
 
 - (void)didReceiveMemoryWarning
 {
@@ -22,10 +26,15 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+  [self setValuesFromPreferences];
 }
 
 - (void)viewDidUnload
 {
+  [self setNameLabel:nil];
+  [self setEmailLabel:nil];
+  [self setPhoneLabel:nil];
+  [self setPicture:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -59,6 +68,25 @@
   } else {
       return YES;
   }
+}
+
+- (void)setValuesFromPreferences {
+  NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+  
+  NSDictionary *initialSettings = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                   @"halp", kPicture,
+                                   @"Your Name", kName,
+                                   @"youremail@yourdomain.com", kEmail,
+                                   @"555-555-5555", kPhone,                                  
+                                   nil];
+  [userDefaults registerDefaults:initialSettings];
+  
+  NSString *picturePreference = [userDefaults stringForKey:kPicture];
+  self.picture.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@%@", picturePreference, @".png"]];
+  
+  self.nameLabel.text = [userDefaults stringForKey:kName];
+  self.emailLabel.text = [userDefaults stringForKey:kEmail];
+  self.phoneLabel.text = [userDefaults stringForKey:kPhone];
 }
 
 @end
